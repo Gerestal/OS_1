@@ -1,0 +1,10 @@
+build
+debug 
+release
+*.vcxproj.*
+.vs/
+*.user
+*.suo
+*.vcxproj.user
+.vs/
+x64
