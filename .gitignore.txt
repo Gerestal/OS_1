@@ -11,23 +11,36 @@ x64/
 # Build directories
 build/
 build_*/
-
-# CMake
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
-
-# VS/IDE
 *.sln
 *.vcxproj*
 .vs/
-
-# Binaries
 *.exe
 *.dll
 *.lib
 *.obj
-
-# Others
 *.log
+# CMake
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.sln
+*.vcxproj*
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.user
+*.opensdf
+*.sdf
+/bin/
+/obj/
+*.exe
+*.dll
+*.lib
+*.obj
+f

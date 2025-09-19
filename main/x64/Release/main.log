@@ -35,6 +35,6 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.42.3443
   
   Создание кода
   Previous IPDB not found, fall back to full compilation.
-  All 319 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 329 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Создание кода завершено
   main.vcxproj -> C:\Users\User\Desktop\С++\Lab1\x64\Release\main.exe

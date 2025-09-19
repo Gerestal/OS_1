@@ -1,0 +1,5 @@
+C:/Users/User/Desktop/С++/Lab1/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/User/Desktop/С++/Lab1/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/User/Desktop/С++/Lab1/build/Repoter/CMakeFiles/Reporter.dir
+C:/Users/User/Desktop/С++/Lab1/build/Creator/CMakeFiles/Creator.dir
+C:/Users/User/Desktop/С++/Lab1/build/main/CMakeFiles/lab1.dir

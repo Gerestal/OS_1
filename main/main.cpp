@@ -112,13 +112,39 @@ int main()
         string binFileName;
         int recordCount;
 
-        cout << "Enter the name of the binary file: ";
-        cin >> binFileName;
-        cout << "Enter the number of employees: ";
-        cin >> recordCount;
+        while (true) {
+            cout << "Enter the name of the binary file: ";
+            cin >> binFileName;
+
+            
+            if (binFileName.empty()) {
+                cout << "Error: File name can't be empty.\n";
+                continue;
+            }
+
+            
+            const string forbidden = "\\/:*?\"<>|";
+            if (binFileName.find_first_of(forbidden) != string::npos) {
+                cout << "Error: File name contains invalid characters.\n";
+                continue;
+            }
+            break;
+        }
+
+        while (true) {
+            cout << "Enter the number of employees: ";
+            cin >> recordCount;
+
+            if (recordCount < 0) {
+                cout << "Error: Number of employees can't be negative.\n";
+                continue;
+            }
+            
+            break;
+        }
 
 
-        wstring creatorPath = L"C:/Users/User/Desktop/я++/ня/x64/Release/ня_1.exe";
+        wstring creatorPath = L"C:/Users/User/Desktop/я++/Lab1/x64/Release/Creator.exe";
         wstring creatorParams = wstring(binFileName.begin(), binFileName.end()) + L" " + to_wstring(recordCount);
 
         DoProcess(creatorPath, creatorParams);
@@ -131,13 +157,43 @@ int main()
         string reportFileName;
         double hourlyRate;
 
-        cout << "\nEnter the name of the report file: ";
-        cin >> reportFileName;
-        cout << "Enter the payment for the hour of work: ";
-        cin >> hourlyRate;
+        while (true) {
+            cout << "Enter the name of the report file: ";
+            cin >> reportFileName;
 
 
-        wstring reporterPath = L"C:/Users/User/Desktop/я++/ня/x64/Release/Reporter.exe";
+            if (reportFileName.empty()) {
+                cout << "Error: File name cannot be empty.\n";
+                continue;
+            }
+
+
+            const string forbidden = "\\/:*?\"<>|";
+            if (reportFileName.find_first_of(forbidden) != string::npos) {
+                cout << "Error: File name contains invalid characters.\n";
+                continue;
+            }
+            break;
+        }
+       
+
+        while (true) {
+            cout << "Enter the payment for the hour of work: ";
+            if (!(cin >> hourlyRate)) {
+                cout << "Error: please enter a valid paymant.\n";
+                continue;
+            }
+
+            if (hourlyRate < 0) {
+                cout << "Error: payment can't be negative.\n";
+                continue;
+            }
+
+            break;
+        }
+
+
+        wstring reporterPath = L"C:/Users/User/Desktop/я++/Lab1/x64/Release/Repoter.exe";
         wstring reporterParams = wstring(binFileName.begin(), binFileName.end()) + L" " +
             wstring(reportFileName.begin(), reportFileName.end()) + L" " +
             to_wstring(hourlyRate);
