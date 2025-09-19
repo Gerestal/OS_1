@@ -1,34 +1,9 @@
-# Visual Studio
-.vs/
-*.suo
-*.user
-*.vcxproj.user
 
-# Solution & project files
-*.sln
-*.vcxproj*
-*.opensdf
-*.sdf
+*
 
-# Build results
-[Bb]in/
-[Oo]bj/
-build/
-build_*/
-out/
-Debug/
-Release/
-x64/
+!*/
 
-# CMake
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
+!.gitignore
 
-# Binaries and logs
-*.exe
-*.dll
-*.lib
-*.obj
-*.log
+!CMakeLists.txt
+!*.cpp
