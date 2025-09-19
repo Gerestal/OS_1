@@ -1,47 +1,34 @@
-*.sln
-build
-debug 
-release
-*.vcxproj.*
+# Visual Studio
 .vs/
-*.user
 *.suo
+*.user
 *.vcxproj.user
-.vs/
-x64/
-# Build directories
-build/
-build_*/
-CMakeCache.txt
-CMakeFiles/
-cmake_install.cmake
-Makefile
+
+# Solution & project files
 *.sln
 *.vcxproj*
-.vs/
+*.opensdf
+*.sdf
+
+# Build results
+[Bb]in/
+[Oo]bj/
+build/
+build_*/
+out/
+Debug/
+Release/
+x64/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Binaries and logs
 *.exe
 *.dll
 *.lib
 *.obj
 *.log
-# CMake
-/build/
-/CMakeFiles/
-/CMakeCache.txt
-cmake_install.cmake
-Makefile
-*.sln
-*.vcxproj*
-*.vcxproj.filters
-*.vcxproj.user
-*.suo
-*.user
-*.opensdf
-*.sdf
-/bin/
-/obj/
-*.exe
-*.dll
-*.lib
-*.obj
-f
