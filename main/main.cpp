@@ -1,11 +1,12 @@
 #include "Header.h"
 #include <windows.h>
+#undef max
 #include <conio.h>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <exception>
-
+#include <limits>
 
 
 using namespace std;
@@ -177,8 +178,10 @@ int main()
 
         while (true) {
             cout << "Enter the payment for the hour of work: ";
-            if (!(cin >> hourlyRate)) {
-                cout << "Error: please enter a valid paymant.\n";
+            if (!(cin >> hourlyRate)) {                    
+                cout << "Error: please enter a valid number.\n";
+                cin.clear();                               
+                cin.ignore(std::numeric_limits<streamsize>::max(), '\n'); 
                 continue;
             }
 

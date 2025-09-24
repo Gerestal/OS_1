@@ -42,6 +42,8 @@ int main(int argc, char* argv[]) {
                 cout << "Employee identification number: ";
                 if (!(cin >> emp.num)) {
                     cout << "Error: please enter a valid integer for employee ID.\n";
+                    cin.clear(); 
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     continue;
                 }
                 if (emp.num < 0) {
@@ -86,6 +88,8 @@ int main(int argc, char* argv[]) {
                 cout << "Number of working hours: ";
                 if (!(cin >> emp.hours)) {
                     cout << "Error: please enter a valid count of hours.\n";
+                    cin.clear(); 
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 continue;
                 }
                 if (emp.hours < 0) {
