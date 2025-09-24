@@ -1,3 +1,4 @@
+#include "Header.h"
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
@@ -5,22 +6,10 @@
 #include <fstream>
 #include <exception>
 
+
+
 using namespace std;
 
-
-struct employee {
-    int num;
-    char name[10];
-    double hours;
-    
-};
-
-struct employee2 {
-    int num;
-    char name[10];
-    double hours;
-    double salary;
-};
 
 
 bool DoProcess(const wstring& appPath, const wstring& params)
@@ -33,9 +22,11 @@ bool DoProcess(const wstring& appPath, const wstring& params)
 
     
     wstring cmdLine = L"\"" + appPath + L"\" " + params;
+   
 
     if (!CreateProcessW(
-        appPath.c_str(),         
+       // appPath.c_str(),    
+        nullptr,
         &cmdLine[0],             
         NULL, NULL, FALSE,
         CREATE_NEW_CONSOLE,
@@ -105,49 +96,56 @@ void PrintFile2(const string& fileName)
     cout << endl;
 }
 
+string ReadBinaryFileName(istream& in, ostream& out) {
+    const string forbidden = "\\/:*?\"<>|";
+    string name;
+    while (true) {
+        out << "Enter the name of the binary file: ";
+        in >> name;
+        if (name.empty()) {
+            out << "Error: File name can't be empty.\n";
+            continue;
+        }
+        if (name.find_first_of(forbidden) != string::npos) {
+            out << "Error: File name contains invalid characters.\n";
+            continue;
+        }
+        return name;
+    }
+}
+
+int ReadRecordCount(istream& in, ostream& out) {
+    int cnt;
+    while (true) {
+        out << "Enter the number of employees: ";
+        in >> cnt;
+        if (!in) throw runtime_error("EOF or bad input");
+        if (cnt < 0) {
+            out << "Error: Number of employees can't be negative.\n";
+            continue;
+        }
+        return cnt;
+    }
+}
+
+
+
 int main()
 {
     try {
+        
 
-        string binFileName;
-        int recordCount;
-
-        while (true) {
-            cout << "Enter the name of the binary file: ";
-            cin >> binFileName;
-
-            
-            if (binFileName.empty()) {
-                cout << "Error: File name can't be empty.\n";
-                continue;
-            }
-
-            
-            const string forbidden = "\\/:*?\"<>|";
-            if (binFileName.find_first_of(forbidden) != string::npos) {
-                cout << "Error: File name contains invalid characters.\n";
-                continue;
-            }
-            break;
-        }
-
-        while (true) {
-            cout << "Enter the number of employees: ";
-            cin >> recordCount;
-
-            if (recordCount < 0) {
-                cout << "Error: Number of employees can't be negative.\n";
-                continue;
-            }
-            
-            break;
-        }
+        string binFileName = ReadBinaryFileName(cin, cout);
+        int recordCount = ReadRecordCount(cin, cout);
 
 
-        wstring creatorPath = L"C:/Users/User/Desktop/Ñ++/Lab1/x64/Release/Creator.exe";
+      wstring creatorPath = L"Creator.exe";
+
+        
         wstring creatorParams = wstring(binFileName.begin(), binFileName.end()) + L" " + to_wstring(recordCount);
+       
 
-        DoProcess(creatorPath, creatorParams);
+       DoProcess(creatorPath, creatorParams);
 
 
         cout << "\nThe contents of the binary file:\n";
@@ -193,7 +191,7 @@ int main()
         }
 
 
-        wstring reporterPath = L"C:/Users/User/Desktop/Ñ++/Lab1/x64/Release/Repoter.exe";
+        wstring reporterPath = L"Repoter.exe";
         wstring reporterParams = wstring(binFileName.begin(), binFileName.end()) + L" " +
             wstring(reportFileName.begin(), reportFileName.end()) + L" " +
             to_wstring(hourlyRate);
