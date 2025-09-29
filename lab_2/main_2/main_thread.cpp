@@ -1,25 +1,11 @@
-#include <windows.h>
 #include <iostream>
+#include <thread>
+#include <chrono>
+#include "Header.h"
+
 using namespace std;
 
-struct ThreadArgs {
-    int* arr;
-    int size;
-};
-
-struct MinMaxResult {
-    int min;
-    int max;
-};
-
-struct AverageResult {
-    int average;
-};
-
-MinMaxResult result1;
-AverageResult result2;
-
-DWORD WINAPI min_max(LPVOID args)
+void min_max(void* args)
 {
     cout << "MinMax thread is started." << endl;
     ThreadArgs* args1 = static_cast<ThreadArgs*>(args);
@@ -30,11 +16,11 @@ DWORD WINAPI min_max(LPVOID args)
     for (int i = 1; i < size; ++i) {
         if (arr[i] < min) {
             min = arr[i];
-            Sleep(7);
+            this_thread::sleep_for(chrono::milliseconds(7));
         }
         if (arr[i] > max) {
             max = arr[i];
-            Sleep(7);
+            this_thread::sleep_for(chrono::milliseconds(7));
         }
     }
 
@@ -45,10 +31,9 @@ DWORD WINAPI min_max(LPVOID args)
     result1.max = max;
 
     cout << "MinMax thread is finished." << endl;
-    return 0;
 }
 
-DWORD WINAPI average(LPVOID args)
+void average(void* args)
 {
     cout << "Average thread is started." << endl;
     ThreadArgs* args1 = static_cast<ThreadArgs*>(args);
@@ -58,7 +43,7 @@ DWORD WINAPI average(LPVOID args)
     int sum = 0;
     for (int i = 0; i < size; ++i) {
         sum += arr[i];
-        Sleep(12);
+        this_thread::sleep_for(chrono::milliseconds(12));
     }
     int result = sum / size;
 
@@ -67,7 +52,6 @@ DWORD WINAPI average(LPVOID args)
     result2.average = result;
 
     cout << "Average thread is finished." << endl;
-    return 0;
 }
 
 int main()
@@ -88,28 +72,17 @@ int main()
 
     ThreadArgs* args = new ThreadArgs{ arr, n };
 
-    
+
     result1.min = 0;
     result1.max = 0;
     result2.average = 0;
 
-    
-    HANDLE hThread;
-    DWORD IDThread;
-    hThread = CreateThread(NULL, 0, min_max, args, 0, &IDThread);
-    if (hThread == NULL)
-        return GetLastError();
-    WaitForSingleObject(hThread, INFINITE);
-    CloseHandle(hThread);
-    
-    HANDLE hThread2;
-    DWORD IDThread2;
-    hThread2 = CreateThread(NULL, 0, average, args, 0, &IDThread2);
-    if (hThread2 == NULL)
-        return GetLastError();
-    WaitForSingleObject(hThread2, INFINITE);
-    CloseHandle(hThread2);
 
+    thread t1(min_max, args);
+    t1.join();
+
+    thread t2(average, args);
+    t2.join();
 
     for (int i = 0; i < n; ++i) {
         if (arr[i] == result1.min || arr[i] == result1.max) {
@@ -123,7 +96,7 @@ int main()
     }
     cout << endl;
 
-   
+
     delete[] arr;
     delete args;
 
