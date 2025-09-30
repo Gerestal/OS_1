@@ -6,4 +6,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(main)
 add_subdirectory(main_2)
+add_subdirectory(For_tests)
 
+add_custom_target(run_all_tests
+    COMMAND ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/run_tests
+    DEPENDS For_tests
+    COMMENT "Running all tests..."
+)
