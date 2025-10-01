@@ -12,15 +12,17 @@ void min_max(void* args)
     int* arr = args1->arr;
     int size = args1->size;
 
+    
     int min = arr[0], max = arr[0];
+    const int c = 7;
     for (int i = 1; i < size; ++i) {
         if (arr[i] < min) {
             min = arr[i];
-            this_thread::sleep_for(chrono::milliseconds(7));
+            this_thread::sleep_for(chrono::milliseconds(c));
         }
         if (arr[i] > max) {
             max = arr[i];
-            this_thread::sleep_for(chrono::milliseconds(7));
+            this_thread::sleep_for(chrono::milliseconds(c));
         }
     }
 
@@ -41,9 +43,10 @@ void average(void* args)
     int size = args1->size;
 
     int sum = 0;
+    const int c = 12;
     for (int i = 0; i < size; ++i) {
         sum += arr[i];
-        this_thread::sleep_for(chrono::milliseconds(12));
+        this_thread::sleep_for(chrono::milliseconds(c));
     }
     int result = sum / size;
 
@@ -56,49 +59,63 @@ void average(void* args)
 
 int main()
 {
-    int n;
-    cout << "Enter array size: ";
-    cin >> n;
-    while (n <= 0) {
-        cout << "Size should be positive. Enter again: ";
+    try {
+        int n;
+        cout << "Enter array size: ";
         cin >> n;
-    }
-
-    int* arr = new int[n];
-    cout << "Enter " << n << " elements: ";
-    for (int i = 0; i < n; ++i) {
-        cin >> arr[i];
-    }
-
-    ThreadArgs* args = new ThreadArgs{ arr, n };
-
-
-    result1.min = 0;
-    result1.max = 0;
-    result2.average = 0;
-
-
-    thread t1(min_max, args);
-    t1.join();
-
-    thread t2(average, args);
-    t2.join();
-
-    for (int i = 0; i < n; ++i) {
-        if (arr[i] == result1.min || arr[i] == result1.max) {
-            arr[i] = result2.average;
+        if (cin.fail()) {
+            throw runtime_error("Invalid input type");
         }
+        while (n <= 0) {
+            cout << "Size should be positive. Enter again: ";
+            cin >> n;
+            if (cin.fail()) {
+                throw runtime_error("Invalid input type");
+            }
+        }
+
+        int* arr = new int[n];
+        cout << "Enter " << n << " elements: ";
+        for (int i = 0; i < n; ++i) {
+            cin >> arr[i];
+            if (cin.fail()) {
+                throw runtime_error("Invalid input type");
+            }
+        }
+
+        ThreadArgs* args = new ThreadArgs{ arr, n };
+
+
+        result1.min = 0;
+        result1.max = 0;
+        result2.average = 0;
+
+
+        thread t1(min_max, args);
+        t1.join();
+
+        thread t2(average, args);
+        t2.join();
+
+        for (int i = 0; i < n; ++i) {
+            if (arr[i] == result1.min || arr[i] == result1.max) {
+                arr[i] = result2.average;
+            }
+        }
+
+        cout << "Final array: ";
+        for (int i = 0; i < n; ++i) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+
+
+        delete[] arr;
+        delete args;
     }
-
-    cout << "Final array: ";
-    for (int i = 0; i < n; ++i) {
-        cout << arr[i] << " ";
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+        return 1;
     }
-    cout << endl;
-
-
-    delete[] arr;
-    delete args;
-
     return 0;
 }
