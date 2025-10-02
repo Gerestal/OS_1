@@ -2,8 +2,10 @@
 #include <thread>
 #include <chrono>
 #include "Header.h"
-
 using namespace std;
+
+const int time_for_Sleep_min_max = 7;
+const int time_for_Sleep_average = 12;
 
 void min_max(void* args)
 {
@@ -11,19 +13,18 @@ void min_max(void* args)
     ThreadArgs* args1 = static_cast<ThreadArgs*>(args);
     int* arr = args1->arr;
     int size = args1->size;
-
-    
+        
     int min = arr[0], max = arr[0];
     const int c = 7;
     for (int i = 1; i < size; ++i) {
         if (arr[i] < min) {
             min = arr[i];
-            this_thread::sleep_for(chrono::milliseconds(c));
         }
+        this_thread::sleep_for(chrono::milliseconds(time_for_Sleep_min_max));
         if (arr[i] > max) {
             max = arr[i];
-            this_thread::sleep_for(chrono::milliseconds(c));
         }
+        this_thread::sleep_for(chrono::milliseconds(time_for_Sleep_min_max));
     }
 
     cout << "Min: " << min << endl;
@@ -46,7 +47,7 @@ void average(void* args)
     const int c = 12;
     for (int i = 0; i < size; ++i) {
         sum += arr[i];
-        this_thread::sleep_for(chrono::milliseconds(c));
+        this_thread::sleep_for(chrono::milliseconds(time_for_Sleep_average));
     }
     int result = sum / size;
 
@@ -85,16 +86,14 @@ int main()
 
         ThreadArgs* args = new ThreadArgs{ arr, n };
 
-
         result1.min = 0;
         result1.max = 0;
         result2.average = 0;
 
-
         thread t1(min_max, args);
-        t1.join();
-
         thread t2(average, args);
+
+        t1.join();
         t2.join();
 
         for (int i = 0; i < n; ++i) {

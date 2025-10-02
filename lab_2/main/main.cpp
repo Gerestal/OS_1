@@ -3,6 +3,8 @@
 #include "Header.h"
 using namespace std;
 
+const int time_for_Sleep_min_max = 7;
+const int time_for_Sleep_average = 12;
 
 DWORD WINAPI min_max(LPVOID args)
 {
@@ -12,16 +14,15 @@ DWORD WINAPI min_max(LPVOID args)
     int size = args1->size;
 
     int min = arr[0], max = arr[0];
-    const int c = 7;
     for (int i = 1; i < size; ++i) {
         if (arr[i] < min) {
             min = arr[i];
-            Sleep(c);
         }
+        Sleep(time_for_Sleep_min_max);
         if (arr[i] > max) {
             max = arr[i];
-            Sleep(c);
         }
+        Sleep(time_for_Sleep_min_max);
     }
 
     cout << "Min: " << min << endl;
@@ -42,10 +43,9 @@ DWORD WINAPI average(LPVOID args)
     int size = args1->size;
 
     long long sum = 0;
-    const int c = 12;
     for (int i = 0; i < size; ++i) {
         sum += arr[i];
-        Sleep(c);
+        Sleep(time_for_Sleep_average);
     }
     int result = sum / size;
 
