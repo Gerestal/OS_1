@@ -42,7 +42,7 @@ void average(void* args)
     int* arr = args1->arr;
     int size = args1->size;
 
-    int sum = 0;
+    long long sum = 0;
     const int c = 12;
     for (int i = 0; i < size; ++i) {
         sum += arr[i];
