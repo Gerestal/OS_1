@@ -1,4 +1,4 @@
-// tests_doctest.cpp
+
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include <windows.h>
